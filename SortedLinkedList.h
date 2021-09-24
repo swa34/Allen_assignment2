@@ -2,21 +2,22 @@
 #define SORTEDLINKEDLIST_H
 
 #include "ItemType.h"
+#include "ListNode.h"
 #include <iostream>
 
 using namespace std;
 
-struct NodeType{
-  ItemType info;
-  NodeType* next;
-};
+//struct ListNode{
+//  ItemType info;
+//  ListNode* next;
+//};
 
 class LinkedList{
 
   int length;
-  NodeType* head;
-  NodeType* current;
-  NodeType* findNode(ItemType &item);
+  ListNode* head;
+  ListNode* current;
+  ListNode* findNode(ItemType &item);
   void getNextNode(); 
   
  public:

@@ -6,7 +6,7 @@ Otherwise return nullptr.
 @param item: this is the item you want to find the node
 @return: the address of the item
 */
-NodeType* LinkedList::findNode(ItemType &item){
+ListNode* LinkedList::findNode(ItemType &item){
   current = head;
   for(int i = 0; i < length; i++){
     if(current->info.getValue() != item.getValue()){
@@ -38,7 +38,7 @@ LinkedList::LinkedList(){
 all nodes are freed.
 */
 LinkedList::~LinkedList(){
-  NodeType* temp;
+  ListNode* temp;
   while(head != nullptr){
     temp = head;
     head = head->next;
@@ -74,8 +74,8 @@ item is inserted into the list in sorted order.
 @param item: this is the item you want to insert
 */
 void LinkedList::insertItem(ItemType &item){
-  NodeType * nNode = new NodeType();
-  NodeType * pNode = nullptr;
+  ListNode * nNode = new ListNode();
+  ListNode * pNode = nullptr;
   nNode->info.initialize(item.getValue());
   if(head == nullptr){						// when head == nullptr
     head = nNode;
@@ -109,8 +109,8 @@ the node that contains item is removed from the list.
 @param item: this is the item you want to delete
 */
 void LinkedList::deleteItem(ItemType &item){
-  NodeType * preLocation = head;
-  NodeType * location = head;
+  ListNode * preLocation = head;
+  ListNode * location = head;
   if(head == nullptr){
     return;
   }
@@ -163,7 +163,7 @@ ist contains no items. Length is equal to 0. All node
 pointer memory freed.
 */
 void LinkedList::makeEmpty(){
-  NodeType* temp;
+  ListNode* temp;
   while(head != nullptr){
     temp = head;
     head = head->next;
