@@ -1,46 +1,25 @@
 #include "ItemType.h"
+using namespace std;
 
-/**
-ItemType object is created.
-*/
 ItemType::ItemType(){
-  value = 0;
+  this->value = 0;
 }
 
-/**
-returns an enumeration that indicates whether the
-calling object is GREATER, LESS, or EQUAL to item.
-@return: the enumeration of relationType
-*/
-RelationType ItemType::compareTo(ItemType & item){
-  if(value > item.value){
-    return GREATER;
-  }else if(value == item.value){
-    return EQUAL;
-  }else{
-    return LESS;
+enum Comparison ItemType::compareTo(ItemType item){
+  enum Comparison returnComparison = GREATER;
+  if(item.getValue() == this->getValue()){
+	returnComparison = EQUAL;
   }
+  else if(item.getValue() > this->getValue()){
+	returnComparison = LESS;
+  }
+  return returnComparison;
 }
 
-/**
-value instance variable is printed to standard-out.
-*/
-void ItemType::print(){
-  cout << "value is: " << value << endl;
-}
-
-/**
-the value instance variable is set to number.
-@param number: this is the number you want to initialize
-*/
-void ItemType::initialize(int number){
-  value = number;
-}
-
-/**
-return the value instance variable.
-@return: the number value
-*/
 int ItemType::getValue()const{
-  return value;
+  return this->value;
+}
+
+void ItemType::initialize(int num) {
+  this->value = num;
 }

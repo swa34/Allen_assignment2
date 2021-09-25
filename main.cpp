@@ -1,119 +1,146 @@
+#include <iostream>
 #include "ItemType.h"
+#include "ListNode.h"
 #include "SortedLinkedList.h"
 #include <fstream>
-#include <cstdlib>
-#include <iostream>
 #include <string>
-#include <limits>
+
 using namespace std;
 
-int cinNumber();
+// Main that runs the program.
+SortedLinkedList *inputList(int length){
+  SortedLinkedList *newList = new SortedLinkedList();
 
-int main(const int argc, const char * argv[]){
-  LinkedList list;
+
+
+
+}
+int main(int argc, char** argv){
+  SortedLinkedList list;
   ItemType item;
   int input;
-  string command;
   fstream fs;
-  int number;
 
-  // open file and put all the variable in the linkedList
-  fs.open(argv[1],ifstream::in);
-  if(fs.is_open()){
-    fs >> input;
-    while(!fs.eof()){
-      item.initialize(input);
-      list.insertItem(item);
-      fs >> input;
-    }
+  fs.open(argv[1], fstream::in);
+  if (fs.is_open())
+  {
+	fs >> input;
+	while (!fs.eof())
+	{
+	  item.initialize(input);
+	  list.insertItem(item);
+	  fs >> input;
+	}
   }
-  else{
-    cout << "File could not be opened. " <<
-      "Try again." << endl;
-    return 0;
+  else
+  {
+	cout << "Failed to open the input file" << std::endl;
+	return 0;
+  }
+  string command = "";
+  while(command != "q"){
+	//main
+	cout << "Commands:" << endl;
+	cout << "(i) - Insert value" << endl;
+	cout << "(d) - Delete value" << endl;
+	cout << "(s) - Search value" << endl;
+	cout << "(n) - Print next iterator value" << endl;
+	cout << "(r) - Reset iterator" << endl;
+	cout << "(a) - Delete alternate nodes" << endl;
+	cout << "(m) - Merge two lists" << endl;
+	cout << "(t) - Intersection" << endl;
+	cout << "(p) - Print list" << endl;
+	cout << "(l) - Print length" << endl;
+	cout << "(q) - Quit program" << endl;
+
+	cout << "Enter a command: ";
+	cin >> command;
+
+	if(command == "i"){
+	  list.print();
+	  cout << "Enter a number: ";
+	  cin >> input;
+	  cout << endl;
+	  item.initialize(input);
+	  list.insertItem(item);
+	  list.print();
+	}
+
+	else if(command == "d"){
+	  list.print();
+	  cout << "Enter value to delete: ";
+	  cin >> input;
+	  cout << endl;
+	  item.initialize(input);
+	  list.deleteItem(item);
+	  list.print();
+	}
+
+	else if(command == "s"){
+	  cout << "Enter a value to search: ";
+	  cin >> input;
+	  item.initialize(input);
+	  int returnValue = list.searchItem(item);
+	  if(returnValue == -1){
+		cout << "Item not found" << endl;
+	  }
+	  else{
+		cout << "Index " << returnValue << endl;
+	  }
+	}
+
+	else if(command == "p"){
+	  list.print();
+	}
+
+	else if(command == "r"){
+	  list.resetIterator();
+	  cout << "Iterator reset" << endl;
+	}
+
+	else if(command == "a") {
+	  list.deleteAlternateNodes();
+	  list.print();
+	}
+
+	else if(command == "l"){
+	  cout << "List length is " << list.length() << endl;
+	}
+
+	else if(command == "n"){
+	  if(list.length() == 0){
+		cout << "List is empty" << endl;
+	  }
+	  else{
+		item = list.GetNextItem();
+		cout << item.getValue() << endl;
+	  }
+	}
+	else if(command == "q"){
+	  break;
+	}
+
+	else if(command == "m"){
+	  SortedLinkedList *list2;
+	  cout<<"Length of list to merge: ";
+	  int length;
+	  cin>>length;
+	  if(cin.fail()){
+		cout<<"Please enter an integer next time"<<endl;
+		break;
+	  }
+	  list2 = inputList(length);
+	  cout<<"List 1: ";
+	  list.print();
+	  cout<<"List 2: ";
+	  list2->print();
+	  list.Merge(list2);
+	  list.print();
+	}
+	else{
+	  cout << "Invalid command, try again!" << endl;
+	}
+
   }
 
-  // prompt user for command
-  cout << "Commands - insert (i), delete (d), make empty (e), length (l), print (p),get next item (g), reset list (r), quit (q)" << endl;
-  cout << "enter command: ";
-  cin >> command;
-  while(true){
-    // command quit
-    if(command == "q"){
-      break;
-      
-      //command print
-    }else if(command == "p"){
-      if(list.lengthIs() == 0){
-	cout << "list is empty" << endl;
-      }else{
-	list.print();
-      }
-      
-      // command insert
-    }else if(command == "i"){
-      cout << "number to insert: ";
-      number = cinNumber();
-      item.initialize(number);
-      list.insertItem(item);
-      list.print();
-      
-      // command delete
-    }else if(command == "d"){
-      bool found;
-      cout << "number to delete: ";
-      number =cinNumber();
-      item.initialize(number);
-      list.retrieveItem(item,found);
-      if(found){
-	list.deleteItem(item);
-	list.print();
-      }else{
-	cout << "Item not in list." << endl;
-      }
-
-      // command make empty
-    }else if(command == "e"){
-      list.makeEmpty();
-      cout << "list make empty" << endl;
-
-      // command length
-    }else if(command == "l"){
-      cout << list.lengthIs() << endl;
-
-      // command get next item
-    }else if(command == "g"){
-      if(list.lengthIs() == 0){
-	cout << "list is empty, there is no next node." << endl;
-      }else{
-	list.getNextItem(item);
-	cout << "next item: " << item.getValue() << endl;
-      }
-
-      // command reset list
-    }else if(command == "r"){
-      list.resetList();
-      cout << "List reset" << endl;
-      
-      // invalid command
-    }else{
-      cout << "Command not recognized. Try again" << endl;
-    }
-    cout << "enter command: ";
-    cin >> command;
-  }
-  return EXIT_SUCCESS;
-}
-
-int cinNumber(){
-  int x;
-  cin >> x;
-  while(cin.fail())
-    {
-      cin.clear();
-      cin.ignore(numeric_limits<streamsize>::max(),'\n');
-      cout << "invalid entry." << endl << "Enter a number: ";
-      cin >> x;
-    }
-  return x;
 }
