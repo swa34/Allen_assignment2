@@ -1,24 +1,17 @@
-#ifndef SORTEDLINKEDLISTBYLO_ITEMTYPE_H
-#define SORTEDLINKEDLISTBYLO_ITEMTYPE_H
-#include <iostream>
-using namespace std;
+#ifndef ITEMTYPE_H
+#define ITEMTYPE_H
 
-enum Comparison{ GREATER, LESS, EQUAL };
+enum Comparison {GREATER, LESS, EQUAL}; // enumeration used when comparing the ItemType elements
 
 class ItemType {
+  int value; // private data member for value input
 
-  int value;
  public:
-  //default constructor
-  ItemType();
-  /* compares the value of the item with the current objects value
-   * returns GREATER, LESS or EQUAL
-   */
-  Comparison compareTo(ItemType item);
-  //Returns the value instance variable
-  int getValue() const;
-  //Initializes the data member by variable num
-  void initialize(int num);
+  ItemType(); // default constructor
+  ItemType(int value); // constructor for the value input
+  Comparison compareTo(ItemType item); // Compares the value of the item with the current object's value and returns GREATER, LESS, or EQUAL
+  int getValue() const; // returns the value
+  void initialize(int num); // Sets the data member by the variable number
 };
 
-#endif //SORTEDLINKEDLISTBYLO_ITEMTYPE_H
+#endif
